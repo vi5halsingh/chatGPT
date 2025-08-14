@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/theme.css">
+    <link rel="stylesheet" href="/styles/register.css">
+    <title>Register</title>
+</head>
+<body>
+    <form class="register-form" method="POST" action="/register">
+        <h2>Register</h2>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required autocomplete="email" />
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required autocomplete="username" />
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required autocomplete="new-password" />
+        </div>
+        <button type="submit">Sign Up</button>
+    </form>
+</body>
+</html>

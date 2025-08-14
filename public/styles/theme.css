@@ -1,0 +1,31 @@
+/* Theme variables for auth forms */
+:root {
+  --primary-bg: #f5f5f5;
+  --primary-color: #222;
+  --accent-color: #007bff;
+  --input-bg: #fff;
+  --input-border: #ccc;
+  --input-radius: 8px;
+  --input-padding: 1rem;
+  --form-width: 90vw;
+  --form-max-width: 350px;
+  --form-gap: 1.5rem;
+  --btn-bg: var(--accent-color);
+  --btn-color: #fff;
+  --btn-radius: 8px;
+  --btn-padding: 1rem;
+  --shadow: 0 2px 16px rgba(0,0,0,0.07);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --primary-bg: #181a1b;
+    --primary-color: #f5f5f5;
+    --accent-color: #3399ff;
+    --input-bg: #23272a;
+    --input-border: #444;
+    --btn-bg: var(--accent-color);
+    --btn-color: #fff;
+    --shadow: 0 2px 16px rgba(0,0,0,0.45);
+  }
+}
