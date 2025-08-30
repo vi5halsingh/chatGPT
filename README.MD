@@ -84,9 +84,9 @@ API keys for Google Gemini and Pinecone.
 Installation
 Clone the repository:
 
-git clone [https://github.com/your-username/veda-ai.git](https://github.com/your-username/veda-ai.git)
-cd veda-ai
-
+git clone [https://github.com/vi5halsingh/Veda-Ai.git](https://github.com/vi5halsingh/Veda-Ai.git)
+cd Veda-Ai
+# Install dependencies
 Setup the Backend:
 
 cd backend
