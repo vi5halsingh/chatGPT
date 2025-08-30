@@ -3,19 +3,3 @@
 body, #root {
   overflow-x: hidden;
 }
-
-:root {
-  --background: #ffffff;
-  --foreground: #1a1a1a;
-  --border: #e5e7eb;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #1a1a1a;
-    --foreground: #ffffff;
-    --border: #374151;
-    --text:#ffffff
-    
-  }
-}

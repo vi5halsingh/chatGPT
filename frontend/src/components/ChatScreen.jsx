@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import api from "../config/Api";
 import { toast } from "react-toastify";
 import ReactMarkdown from 'react-markdown';
@@ -20,7 +20,7 @@ export default function ChatScreen({ chat, socket }) {
   }, [chat]);
 
   const loadMessage = async () => {
-    if (!chat) return;
+    if (!chat) return null;
     try {
       const allMessages = await api.get(`/chat/${chat.id}`);
       setMessages(allMessages.data.messages);
@@ -37,10 +37,19 @@ export default function ChatScreen({ chat, socket }) {
         { role: "model", content: messagePayload.content },
       ]);
     };
+      const handleAiError = (errorPayload) => {
+        // Show a toast with the error message from the server
+        toast.error(errorPayload.message);
+        // Remove the last message (the user's optimistic message)
+        setMessages((prev) => prev.slice(0, -1));
+        };
+
     socket.on("ai-response", handleAiResponse);
+    socket.on("ai-error", handleAiError);
     return () => {
       socket.off("ai-response", handleAiResponse);
-    };
+      socket.off("ai-error", handleAiError);
+    };  
   }, [socket]);
 
   const handleSend = (e) => {
@@ -84,13 +93,22 @@ export default function ChatScreen({ chat, socket }) {
       );
     }
   };
+   const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   return (
     <div className="flex-1 flex flex-col h-screen overflow-hidden">
       <header className="h-12 border-b border-gray-200 flex items-center px-4 bg-white shadow-sm flex-shrink-0">
         <h1 className="text-lg font-semibold text-gray-800">Veda-Ai</h1>
       </header>
-
+   {chat ? (<>
       <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-gray-50">
         { messages.length === 0 ? (
     <div className="h-full flex items-center justify-center text-gray-400 text-sm">
@@ -116,9 +134,9 @@ export default function ChatScreen({ chat, socket }) {
           </div>
         ))
       )}
+      <div ref={messagesEndRef} />
       </div>
 
-      {chat ? (
         <form
           onSubmit={handleSend}
           className="border border-gray-300 py-2 px-2 flex items-center gap-3 bg-white flex-shrink-0 rounded-full w-full max-w-[80%] mx-auto my-1 "
@@ -137,7 +155,10 @@ export default function ChatScreen({ chat, socket }) {
             <FiArrowUp/>
           </button>
         </form>
-      ) : null}
+        </>
+      ) :  <div className="h-full flex items-center justify-center text-gray-400 text-sm">
+      👋 Welcome! Start a new chat or select an existing one to begin your conversation with Veda-AI.
+    </div>}
     </div>
   );
 }
